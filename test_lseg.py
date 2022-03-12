@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import argparse
 import numpy as np
@@ -277,7 +278,7 @@ def test(args):
     model = model.eval()
     model = model.cpu()
 
-    print(model)
+    # print(model)
     if args.acc_bn:
         from encoding.utils.precise_bn import update_bn_stats
 
@@ -319,7 +320,9 @@ def test(args):
     metric = utils.SegmentationMetric(testset.num_class)
     tbar = tqdm(test_data)
 
-    f = open("logs/log_test_{}_{}.txt".format(args.jobname, args.dataset), "a+")
+    now = datetime.now().strftime('%m%d%H%M')
+    f = open("logs/log_test_{}_{}_{}.txt".format(args.jobname, args.dataset, now), "a+")
+    f.write(f"{args}\n\n")
     per_class_iou = np.zeros(testset.num_class)
     cnt = 0
     for i, (image, dst) in enumerate(tbar):
@@ -432,5 +435,5 @@ class ReturnFirstClosure(object):
 if __name__ == "__main__":
     args = Options().parse()
     torch.manual_seed(args.seed)
-    args.test_batch_size = torch.cuda.device_count() 
+    # args.test_batch_size = torch.cuda.device_count() 
     test(args)
