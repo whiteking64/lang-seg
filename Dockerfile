@@ -38,3 +38,8 @@ RUN apt-get update \
     wget \
     zlib1g-dev \
   && rm -rf /var/lib/apt/lists/*
+
+RUN rm -rf /var/lib/apt/lists/*
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 10 && \
+  python -m pip install -U pip && \
+  pip install setuptools==60.10.0
