@@ -7,7 +7,7 @@ docker_run:
 		--network host \
 		--volume $(PWD):/home/lang-seg \
 		--volume /usr/local/cuda:/usr/local/cuda \
-		--shm-size=2g \
+		--shm-size=8g \
 		--workdir /home/lang-seg \
 		--name lseg \
 		--hostname lseg \
